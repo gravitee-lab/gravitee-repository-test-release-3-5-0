@@ -23,6 +23,7 @@ import org.junit.Test;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static io.gravitee.repository.management.model.MembershipReferenceType.API;
 import static org.junit.Assert.*;
 
 /**
@@ -37,7 +38,7 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void shouldFindById() throws TechnicalException {
-        Optional<Membership> membership = membershipRepository.findById("user1", MembershipReferenceType.API, "api1");
+        Optional<Membership> membership = membershipRepository.findById("user1", API, "api1");
         assertTrue("There is a membership", membership.isPresent());
         assertTrue( membership.get().getRoles().containsKey(RoleScope.API.getId()));
         assertEquals("OWNER", membership.get().getRoles().get(RoleScope.API.getId()));
@@ -45,13 +46,13 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void shouldNotFindById() throws TechnicalException {
-        Optional<Membership> membership = membershipRepository.findById(null, MembershipReferenceType.API, "api1");
+        Optional<Membership> membership = membershipRepository.findById(null, API, "api1");
         assertFalse(membership.isPresent());
     }
 
     @Test
     public void shouldFindAllApiMembers() throws TechnicalException {
-        Set<Membership> memberships = membershipRepository.findByReferenceAndRole(MembershipReferenceType.API, "api1", null, null);
+        Set<Membership> memberships = membershipRepository.findByReferenceAndRole(API, "api1", null, null);
         assertNotNull("result must not be null", memberships);
         assertTrue(!memberships.isEmpty());
         assertEquals("user1", memberships.iterator().next().getUserId());
@@ -59,12 +60,12 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void shouldFindAllApisMembers() throws TechnicalException {
-        Set<Membership> memberships = membershipRepository.findByReferencesAndRole(MembershipReferenceType.API, Arrays.asList("api2", "api3"), null,  null);
+        Set<Membership> memberships = membershipRepository.findByReferencesAndRole(API, Arrays.asList("api2", "api3"), null,  null);
         assertNotNull("result must not be null", memberships);
         assertEquals(2, memberships.size());
-        Membership membership1 = new Membership("user2", "api2", MembershipReferenceType.API);
+        Membership membership1 = new Membership("user2", "api2", API);
         membership1.setRoles(Collections.singletonMap(3, "OWNER"));
-        Membership membership2 = new Membership("user3", "api3", MembershipReferenceType.API);
+        Membership membership2 = new Membership("user3", "api3", API);
         membership2.setRoles(Collections.singletonMap(3, "OWNER"));
         Set<Membership> expectedResult = new HashSet<>(Arrays.asList(membership1, membership2));
         assertTrue("must contain api2 and api3", memberships.containsAll(expectedResult));
@@ -72,10 +73,10 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void shouldFindApisOwners() throws TechnicalException {
-        Set<Membership> memberships = membershipRepository.findByReferencesAndRole(MembershipReferenceType.API, Arrays.asList("api2", "api3"), RoleScope.API, "OWNER");
+        Set<Membership> memberships = membershipRepository.findByReferencesAndRole(API, Arrays.asList("api2", "api3"), RoleScope.API, "OWNER");
         assertNotNull("result must not be null", memberships);
         assertEquals(1, memberships.size());
-        Membership membership1 = new Membership("user2", "api2", MembershipReferenceType.API);
+        Membership membership1 = new Membership("user2", "api2", API);
         membership1.setRoles(Collections.singletonMap(3, "OWNER"));
         Set<Membership> expectedResult = new HashSet<>(Collections.singletonList(membership1));
         assertTrue("must contain api2 and api3", memberships.containsAll(expectedResult));
@@ -83,7 +84,7 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void shouldFindApiOwner() throws TechnicalException {
-        Set<Membership> memberships = membershipRepository.findByReferenceAndRole(MembershipReferenceType.API, "api1", RoleScope.API, "OWNER");
+        Set<Membership> memberships = membershipRepository.findByReferenceAndRole(API, "api1", RoleScope.API, "OWNER");
         assertNotNull("result must not be null", memberships);
         assertTrue(!memberships.isEmpty());
         assertEquals("user1", memberships.iterator().next().getUserId());
@@ -91,7 +92,7 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void shouldFindByUserAndReferenceType() throws TechnicalException {
-        Set<Membership> memberships = membershipRepository.findByUserAndReferenceType("user1", MembershipReferenceType.API);
+        Set<Membership> memberships = membershipRepository.findByUserAndReferenceType("user1", API);
         assertNotNull("result must not be null", memberships);
         assertTrue(!memberships.isEmpty());
         assertEquals("api1", memberships.iterator().next().getReferenceId());
@@ -99,7 +100,7 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void shouldFindByUserAndReferenceTypeAndRole() throws TechnicalException {
-        Set<Membership> memberships = membershipRepository.findByUserAndReferenceTypeAndRole("user1", MembershipReferenceType.API, RoleScope.API, "OWNER");
+        Set<Membership> memberships = membershipRepository.findByUserAndReferenceTypeAndRole("user1", API, RoleScope.API, "OWNER");
         assertNotNull("result must not be null", memberships);
         assertTrue(!memberships.isEmpty());
         Membership membership = memberships.iterator().next();
@@ -142,7 +143,7 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
     public void shouldFindByIds() throws TechnicalException {
         Set<Membership> memberships = membershipRepository.findByIds(
                 "user_findByIds",
-                MembershipReferenceType.API,
+                API,
                 new HashSet<>(Arrays.asList("api1_findByIds", "api2_findByIds", "unknown")));
 
         assertNotNull(memberships);
@@ -183,5 +184,23 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
     public void shouldNotUpdateNull() throws Exception {
         membershipRepository.update(null);
         fail("A null membership should not be updated");
+    }
+
+    @Test
+    public void shouldDeleteMembers() throws TechnicalException {
+
+        Optional<Membership> m1 = membershipRepository.findById("user_deleteRef_1", API, "api_deleteRef");
+        Optional<Membership> m2 = membershipRepository.findById("user_deleteRef_2", API, "api_deleteRef");
+
+        assertTrue("m1 exists", m1.isPresent());
+        assertTrue("m2 exists", m2.isPresent());
+
+        membershipRepository.deleteMembers(API, "api_deleteRef");
+
+        m1 = membershipRepository.findById("user_deleteRef_1", API, "api_deleteRef");
+        m2 = membershipRepository.findById("user_deleteRef_2", API, "api_deleteRef");
+
+        assertFalse("m1 doesn't exist", m1.isPresent());
+        assertFalse("m2 doesn't exist", m2.isPresent());
     }
 }

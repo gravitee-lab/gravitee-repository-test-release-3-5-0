@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 
+import static io.gravitee.repository.management.model.MembershipReferenceType.API;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
@@ -93,5 +94,8 @@ public class MembershipRepositoryMock extends AbstractRepositoryMock<MembershipR
         when(membershipRepository.update(argThat(o -> o == null || o.getReferenceId().equals("unknown")))).thenThrow(new IllegalStateException());
 
         when(membershipRepository.findByRole(RoleScope.APPLICATION, "USER")).thenReturn(new HashSet<>(asList(mock(Membership.class), mock(Membership.class))));
+
+        when(membershipRepository.findById("user_deleteRef_1", API, "api_deleteRef")).thenReturn(of(mock(Membership.class)), empty());
+        when(membershipRepository.findById("user_deleteRef_2", API, "api_deleteRef")).thenReturn(of(mock(Membership.class)), empty());
     }
 }

@@ -68,5 +68,25 @@
     },
     "createdAt" : "1439022010883",
     "updatedAt" : "1439022010883"
+  },
+  {
+    "userId" : "user_deleteRef_1",
+    "referenceId" : "api_deleteRef",
+    "referenceType" : "API",
+    "roles" : {
+      "3": "OWNER"
+    },
+    "createdAt" : "1439022010883",
+    "updatedAt" : "1439022010883"
+  },
+  {
+    "userId" : "user_deleteRef_2",
+    "referenceId" : "api_deleteRef",
+    "referenceType" : "API",
+    "roles" : {
+      "3": "OWNER"
+    },
+    "createdAt" : "1439022010883",
+    "updatedAt" : "1439022010883"
   }
 ]
