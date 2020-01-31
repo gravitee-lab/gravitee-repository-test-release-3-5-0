@@ -91,5 +91,51 @@
     },
     "createdAt": 1000000000000,
     "updatedAt": 1111111111111
+  },
+  {
+    "id": "memory",
+    "organizationId": "DEFAULT",
+    "name": "memory",
+    "description": "In Memory IDP",
+    "enabled": true,
+    "type": "MEMORY",
+    "configuration": {
+      "passwordEncodingAlgo": "bcrypt",
+      "users": [
+        {
+          "password": "$2a$10$9kjw/SH9gucCId3Lnt6EmuFreUAcXSZgpvAYuW2ISv7hSOhHRH1AO",
+          "roles": [
+            "MANAGEMENT:USER",
+            "PORTAL:USER"
+          ],
+          "username": "user"
+        },
+        {
+          "password": "$2a$10$Ihk05VSds5rUSgMdsMVi9OKMIx2yUvMz7y9VP3rJmQeizZLrhLMyq",
+          "roles": [
+            "MANAGEMENT:ADMIN",
+            "PORTAL:ADMIN"
+          ],
+          "username": "admin"
+        }
+      ]
+    },
+    "createdAt": 1000000000000,
+    "updatedAt": 1111111111111,
+    "order": 1
+  },
+  {
+    "id": "gravitee",
+    "organizationId": "DEFAULT",
+    "name": "gravitee",
+    "description": "In Gravitee repository IDP",
+    "enabled": true,
+    "type": "GRAVITEE",
+    "configuration": {
+      "allowEmailInSearchResults": false
+    },
+    "createdAt": 1000000000000,
+    "updatedAt": 1111111111111,
+    "order": 2
   }
 ]

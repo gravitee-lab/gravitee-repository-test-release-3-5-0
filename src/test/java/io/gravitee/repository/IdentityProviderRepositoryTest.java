@@ -16,6 +16,7 @@
 package io.gravitee.repository;
 
 import io.gravitee.repository.config.AbstractRepositoryTest;
+import io.gravitee.repository.exceptions.TechnicalException;
 import io.gravitee.repository.management.model.IdentityProvider;
 import io.gravitee.repository.management.model.IdentityProviderType;
 import org.junit.Assert;
@@ -44,7 +45,7 @@ public class IdentityProviderRepositoryTest extends AbstractRepositoryTest {
         final Set<IdentityProvider> identityProviders = identityProviderRepository.findAll();
 
         assertNotNull(identityProviders);
-        assertEquals(3, identityProviders.size());
+        assertEquals(5, identityProviders.size());
     }
 
     @Test
@@ -52,7 +53,7 @@ public class IdentityProviderRepositoryTest extends AbstractRepositoryTest {
         final Set<IdentityProvider> identityProviders = identityProviderRepository.findAllByOrganizationId("DEFAULT");
 
         assertNotNull(identityProviders);
-        assertEquals(3, identityProviders.size());
+        assertEquals(5, identityProviders.size());
     }
 
     @Test
@@ -191,5 +192,11 @@ public class IdentityProviderRepositoryTest extends AbstractRepositoryTest {
     public void shouldNotUpdateNull() throws Exception {
         identityProviderRepository.update(null);
         fail("A null identity provider should not be updated");
+    }
+
+    @Test
+    public void shouldFindMaxIdentityProviderOrder() throws TechnicalException {
+        Integer maxIdentityProviderOrder = identityProviderRepository.findMaxIdentityProviderOrganizationIdOrder("DEFAULT");
+        assertEquals(Integer.valueOf(2), maxIdentityProviderOrder);
     }
 }

@@ -76,12 +76,34 @@ public class IdentityProviderRepositoryMock extends AbstractRepositoryMock<Ident
         when(identityProviderUpdated.getEmailRequired()).thenReturn(true);
         when(identityProviderUpdated.getSyncMappings()).thenReturn(true);
 
+        final IdentityProvider identityProviderMemory = mock(IdentityProvider.class);
+        when(identityProviderMemory.getName()).thenReturn("memory");
+        when(identityProviderMemory.getOrganizationId()).thenReturn("DEFAULT");
+        when(identityProviderMemory.getDescription()).thenReturn("In Memory IDP");
+        when(identityProviderMemory.getCreatedAt()).thenReturn(new Date(1000000000000L));
+        when(identityProviderMemory.getUpdatedAt()).thenReturn(new Date(1486771200000L));
+        when(identityProviderMemory.getType()).thenReturn(IdentityProviderType.MEMORY);
+        when(identityProviderMemory.isEnabled()).thenReturn(true);
+        when(identityProviderMemory.getEmailRequired()).thenReturn(true);
+        when(identityProviderMemory.getOrder()).thenReturn(1);
+
+        final IdentityProvider identityProviderGravitee = mock(IdentityProvider.class);
+        when(identityProviderGravitee.getName()).thenReturn("gravitee");
+        when(identityProviderGravitee.getOrganizationId()).thenReturn("DEFAULT");
+        when(identityProviderGravitee.getDescription()).thenReturn("In Gravitee repository IDP");
+        when(identityProviderGravitee.getCreatedAt()).thenReturn(new Date(1000000000000L));
+        when(identityProviderGravitee.getUpdatedAt()).thenReturn(new Date(1486771200000L));
+        when(identityProviderGravitee.getType()).thenReturn(IdentityProviderType.GRAVITEE);
+        when(identityProviderGravitee.isEnabled()).thenReturn(true);
+        when(identityProviderGravitee.getEmailRequired()).thenReturn(true);
+        when(identityProviderGravitee.getOrder()).thenReturn(2);
+
         final IdentityProvider identityProvider3 = createMock();
 
-        final Set<IdentityProvider> identityProviders = newSet(newIdentityProvider, identityProvider1, mock(IdentityProvider.class));
-        final Set<IdentityProvider> identityProvidersAfterDelete = newSet(newIdentityProvider, identityProvider1);
-        final Set<IdentityProvider> identityProvidersAfterAdd = newSet(newIdentityProvider, identityProvider1, mock(IdentityProvider.class), mock(IdentityProvider.class));
-        final Set<IdentityProvider> identityProvidersByEnv = newSet(newIdentityProvider, identityProvider1, identityProviderUpdated);
+        final Set<IdentityProvider> identityProviders = newSet(newIdentityProvider, identityProvider1, mock(IdentityProvider.class), identityProviderMemory, identityProviderGravitee);
+        final Set<IdentityProvider> identityProvidersAfterDelete = newSet(newIdentityProvider, identityProvider1, identityProviderMemory, identityProviderGravitee);
+        final Set<IdentityProvider> identityProvidersAfterAdd = newSet(newIdentityProvider, identityProvider1, mock(IdentityProvider.class), identityProviderMemory, identityProviderGravitee, mock(IdentityProvider.class));
+        final Set<IdentityProvider> identityProvidersByEnv = newSet(newIdentityProvider, identityProvider1, identityProviderUpdated, identityProviderMemory, identityProviderGravitee);
         when(identityProviderRepository.findAll()).thenReturn(identityProviders, identityProvidersAfterAdd, identityProviders, identityProvidersAfterDelete, identityProviders);
         when(identityProviderRepository.findAllByOrganizationId("DEFAULT")).thenReturn(identityProvidersByEnv);
 
@@ -91,8 +113,12 @@ public class IdentityProviderRepositoryMock extends AbstractRepositoryMock<Ident
         when(identityProviderRepository.findById("unknown")).thenReturn(empty());
         when(identityProviderRepository.findById("idp-1")).thenReturn(of(identityProvider1), of(identityProviderUpdated));
         when(identityProviderRepository.findById("idp-3")).thenReturn(of(identityProvider3));
+        when(identityProviderRepository.findById("memory")).thenReturn(of(identityProviderMemory));
+        when(identityProviderRepository.findById("gravitee")).thenReturn(of(identityProviderGravitee));
 
         when(identityProviderRepository.update(argThat(o -> o == null || o.getId().equals("unknown")))).thenThrow(new IllegalStateException());
+
+        when(identityProviderRepository.findMaxIdentityProviderOrganizationIdOrder("DEFAULT")).thenReturn(2);
     }
 
     private IdentityProvider createMock() {
