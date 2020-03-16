@@ -202,4 +202,9 @@ public class MockTestRepositoryConfiguration {
     public DashboardRepositoryMock dashboardRepositoryMock() {
         return new DashboardRepositoryMock();
     }
+
+    @Bean
+    public AlertEventRepositoryMock alertEventRepositoryMock() {
+        return new AlertEventRepositoryMock();
+    }
 }
