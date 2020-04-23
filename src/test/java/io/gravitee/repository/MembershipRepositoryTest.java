@@ -42,6 +42,12 @@ public class MembershipRepositoryTest extends AbstractRepositoryTest {
         assertTrue("There is a membership", membership.isPresent());
         assertTrue( membership.get().getRoles().containsKey(RoleScope.API.getId()));
         assertEquals("OWNER", membership.get().getRoles().get(RoleScope.API.getId()));
+        assertEquals("api1", membership.get().getReferenceId());
+        assertEquals("user1", membership.get().getUserId());
+        assertEquals(API, membership.get().getReferenceType());
+        assertEquals("myIdp", membership.get().getSource());
+        assertEquals(new Date(1439022010883L), membership.get().getUpdatedAt());
+        assertEquals(new Date(1439022010883L), membership.get().getCreatedAt());
     }
 
     @Test

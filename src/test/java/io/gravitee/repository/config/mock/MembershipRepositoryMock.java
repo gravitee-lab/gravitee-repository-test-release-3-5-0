@@ -52,6 +52,9 @@ public class MembershipRepositoryMock extends AbstractRepositoryMock<MembershipR
         when(m1.getReferenceType()).thenReturn(MembershipReferenceType.API);
         when(m1.getRoles()).thenReturn(API_OWNER_ROLE_MAP);
         when(m1.getReferenceId()).thenReturn("api1");
+        when(m1.getCreatedAt()).thenReturn(new Date(1439022010883L));
+        when(m1.getUpdatedAt()).thenReturn(new Date(1439022010883L));
+        when(m1.getSource()).thenReturn("myIdp");
         Membership m2 = new Membership("user2", "api2", MembershipReferenceType.API);
         m2.setRoles(API_OWNER_ROLE_MAP);
         Membership m3 = new Membership("user3", "api3", MembershipReferenceType.API);
