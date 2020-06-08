@@ -131,6 +131,8 @@ public abstract class AbstractRepositoryTest {
     protected DashboardRepository dashboardRepository;
     @Inject
     protected AlertEventRepository alertEventRepository;
+    @Inject
+    protected TokenRepository tokenRepository;
 
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -264,6 +266,9 @@ public abstract class AbstractRepositoryTest {
         }
         else if( object instanceof AlertEvent) {
             alertEventRepository.create((AlertEvent) object);
+        }
+        else if( object instanceof Token) {
+            tokenRepository.create((Token) object);
         }
     }
 

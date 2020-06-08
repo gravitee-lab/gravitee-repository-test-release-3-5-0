@@ -67,7 +67,6 @@ public class MockTestRepositoryConfiguration {
         return new TagRepositoryMock();
     }
 
-
     @Bean
     public GroupRepositoryMock groupRepository() {
         return new GroupRepositoryMock();
@@ -206,5 +205,10 @@ public class MockTestRepositoryConfiguration {
     @Bean
     public AlertEventRepositoryMock alertEventRepositoryMock() {
         return new AlertEventRepositoryMock();
+    }
+
+    @Bean
+    public TokenRepositoryMock tokenRepositoryMock() {
+        return new TokenRepositoryMock();
     }
 }
