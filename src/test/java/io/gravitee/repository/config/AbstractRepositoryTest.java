@@ -73,7 +73,7 @@ public abstract class AbstractRepositoryTest {
     protected CategoryRepository categoryRepository;
     @Inject
     protected GroupRepository groupRepository;
-	@Inject
+    @Inject
     protected MembershipRepository membershipRepository;
     @Inject
     protected PlanRepository planRepository;
@@ -139,6 +139,8 @@ public abstract class AbstractRepositoryTest {
     protected ThemeRepository themeRepository;
     @Inject
     protected TokenRepository tokenRepository;
+    @Inject
+    protected IdentityProviderActivationRepository identityProviderActivationRepository;
 
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -169,118 +171,83 @@ public abstract class AbstractRepositoryTest {
     private void createModel(Object object) throws TechnicalException {
         if (object instanceof Application) {
             applicationRepository.create((Application) object);
-        }
-        else if (object instanceof Api) {
+        } else if (object instanceof Api) {
             apiRepository.create((Api) object);
-        }
-        else if (object instanceof User) {
+        } else if (object instanceof User) {
             userRepository.create((User) object);
-        }
-        else if (object instanceof Event) {
+        } else if (object instanceof Event) {
             eventRepository.create((Event) object);
-        }
-        else if (object instanceof ApiKey) {
+        } else if (object instanceof ApiKey) {
             final ApiKey apiKey = (ApiKey) object;
             apiKeyRepository.create(apiKey);
-        }
-        else if (object instanceof Category) {
+        } else if (object instanceof Category) {
             categoryRepository.create((Category) object);
-        }
-        else if (object instanceof Group) {
-            groupRepository.create((Group)object);
-        }
-        else if (object instanceof Membership) {
+        } else if (object instanceof Group) {
+            groupRepository.create((Group) object);
+        } else if (object instanceof Membership) {
             membershipRepository.create((Membership) object);
-        }
-        else if (object instanceof Plan) {
+        } else if (object instanceof Plan) {
             planRepository.create((Plan) object);
-        }
-        else if (object instanceof Tag) {
+        } else if (object instanceof Tag) {
             tagRepository.create((Tag) object);
-        }
-        else if (object instanceof Page) {
+        } else if (object instanceof Page) {
             pageRepository.create((Page) object);
-        }
-        else if (object instanceof Subscription) {
+        } else if (object instanceof Subscription) {
             subscriptionRepository.create((Subscription) object);
-        }
-        else if (object instanceof Tenant) {
+        } else if (object instanceof Tenant) {
             tenantRepository.create((Tenant) object);
-        }
-        else if (object instanceof Metadata) {
+        } else if (object instanceof Metadata) {
             metadataRepository.create((Metadata) object);
-        }
-        else if (object instanceof Role) {
+        } else if (object instanceof Role) {
             roleRepository.create((Role) object);
-        }
-        else if (object instanceof Audit) {
+        } else if (object instanceof Audit) {
             auditRepository.create((Audit) object);
-        }
-        else if (object instanceof Rating) {
+        } else if (object instanceof Rating) {
             ratingRepository.create((Rating) object);
-        }
-        else if (object instanceof RatingAnswer) {
+        } else if (object instanceof RatingAnswer) {
             ratingAnswerRepository.create((RatingAnswer) object);
-        }
-        else if (object instanceof PortalNotification) {
+        } else if (object instanceof PortalNotification) {
             portalNotificationRepository.create((PortalNotification) object);
-        }
-        else if (object instanceof PortalNotificationConfig) {
+        } else if (object instanceof PortalNotificationConfig) {
             portalNotificationConfigRepository.create((PortalNotificationConfig) object);
-        }
-        else if (object instanceof GenericNotificationConfig) {
+        } else if (object instanceof GenericNotificationConfig) {
             genericNotificationConfigRepository.create((GenericNotificationConfig) object);
-        }
-        else if (object instanceof Parameter) {
+        } else if (object instanceof Parameter) {
             parameterRepository.create((Parameter) object);
-        }
-        else if (object instanceof Dictionary) {
+        } else if (object instanceof Dictionary) {
             dictionaryRepository.create((Dictionary) object);
-        }
-        else if (object instanceof ApiHeader) {
+        } else if (object instanceof ApiHeader) {
             apiHeaderRepository.create((ApiHeader) object);
-        }
-        else if (object instanceof Command) {
+        } else if (object instanceof Command) {
             commandRepository.create((Command) object);
-        }
-        else if (object instanceof IdentityProvider) {
+        } else if (object instanceof IdentityProvider) {
             identityProviderRepository.create((IdentityProvider) object);
-        }
-        else if (object instanceof AlertTrigger) {
+        } else if (object instanceof AlertTrigger) {
             alertRepository.create((AlertTrigger) object);
-        }
-        else if (object instanceof Entrypoint) {
+        } else if (object instanceof Entrypoint) {
             entrypointRepository.create((Entrypoint) object);
-        }
-        else if (object instanceof Invitation) {
+        } else if (object instanceof Invitation) {
             invitationRepository.create((Invitation) object);
-        }
-        else if (object instanceof ClientRegistrationProvider) {
+        } else if (object instanceof ClientRegistrationProvider) {
             clientRegistrationProviderRepository.create((ClientRegistrationProvider) object);
-        }
-        else if (object instanceof Workflow) {
+        } else if (object instanceof Workflow) {
             workflowRepository.create((Workflow) object);
-        }
-        else if (object instanceof QualityRule) {
+        } else if (object instanceof QualityRule) {
             qualityRuleRepository.create((QualityRule) object);
-        }
-        else if (object instanceof ApiQualityRule) {
+        } else if (object instanceof ApiQualityRule) {
             apiQualityRuleRepository.create((ApiQualityRule) object);
-        }
-        else if (object instanceof Dashboard) {
+        } else if (object instanceof Dashboard) {
             dashboardRepository.create((Dashboard) object);
-        }
-        else if( object instanceof AlertEvent) {
+        } else if (object instanceof AlertEvent) {
             alertEventRepository.create((AlertEvent) object);
-        }
-        else if (object instanceof Environment) {
+        } else if (object instanceof Environment) {
             environmentRepository.create((Environment) object);
-        }
-        else if (object instanceof Organization) {
+        } else if (object instanceof Organization) {
             organizationRepository.create((Organization) object);
-        }
-        else if (object instanceof Theme) {
+        } else if (object instanceof Theme) {
             themeRepository.create((Theme) object);
+        } else if (object instanceof IdentityProviderActivation) {
+            identityProviderActivationRepository.create((IdentityProviderActivation) object);
         }
         else if( object instanceof Token) {
             tokenRepository.create((Token) object);

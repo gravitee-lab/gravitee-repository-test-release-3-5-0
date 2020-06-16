@@ -1,0 +1,32 @@
+[
+  {
+    "identityProviderId": "github",
+    "referenceId": "DEFAULT",
+    "referenceType": "ENVIRONMENT",
+    "createdAt": 1000000000000
+  },
+  {
+    "identityProviderId": "google",
+    "referenceId": "DEFAULT",
+    "referenceType": "ENVIRONMENT",
+    "createdAt": 2000000000000
+  },
+  {
+    "identityProviderId": "oidc",
+    "referenceId": "DEFAULT",
+    "referenceType": "ENVIRONMENT",
+    "createdAt": 3000000000000
+  },
+  {
+    "identityProviderId": "oidc",
+    "referenceId": "DEFAULT",
+    "referenceType": "ORGANIZATION",
+    "createdAt": 4000000000000
+  },
+  {
+    "identityProviderId": "google_DEV",
+    "referenceId": "DEV",
+    "referenceType": "ENVIRONMENT",
+    "createdAt": 5000000000000
+  }
+]

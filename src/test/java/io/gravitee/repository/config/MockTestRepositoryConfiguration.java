@@ -226,4 +226,9 @@ public class MockTestRepositoryConfiguration {
     public TokenRepositoryMock tokenRepositoryMock() {
         return new TokenRepositoryMock();
     }
+
+    @Bean
+    public IdentityProviderActivationRepositoryMock identityProviderActivationRepository() throws Exception {
+        return new IdentityProviderActivationRepositoryMock();
+    }
 }
