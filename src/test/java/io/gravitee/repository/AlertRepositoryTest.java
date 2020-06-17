@@ -16,7 +16,9 @@
 package io.gravitee.repository;
 
 import io.gravitee.repository.config.AbstractRepositoryTest;
+import io.gravitee.repository.exceptions.TechnicalException;
 import io.gravitee.repository.management.model.AlertTrigger;
+import io.gravitee.repository.management.model.Group;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -53,6 +55,8 @@ public class AlertRepositoryTest extends AbstractRepositoryTest {
         assertTrue(optionalAlert.get().isEnabled());
         assertEquals(1439022010883L, optionalAlert.get().getCreatedAt().getTime());
         assertEquals(1439022010883L, optionalAlert.get().getUpdatedAt().getTime());
+        assertTrue(optionalAlert.get().isTemplate());
+        assertEquals(1, optionalAlert.get().getEventRules().size());
     }
 
     @Test
@@ -141,6 +145,17 @@ public class AlertRepositoryTest extends AbstractRepositoryTest {
         final List<AlertTrigger> alerts = alertRepository.findByReference("API", "api-id");
         assertNotNull(alerts);
         assertEquals(1, alerts.size());
+    }
+
+    @Test
+    public void shouldFindById() throws TechnicalException {
+        Optional<AlertTrigger> alert = alertRepository.findById("health-check");
+
+        assertNotNull(alert);
+        assertTrue(alert.isPresent());
+        assertEquals("health-check", alert.get().getId());
+        assertEquals("Health-check", alert.get().getName());
+        assertEquals(1, alert.get().getEventRules().size());
     }
 
     @Test(expected = IllegalStateException.class)
