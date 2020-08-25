@@ -19,10 +19,7 @@ import io.gravitee.repository.management.api.IdentityProviderRepository;
 import io.gravitee.repository.management.model.IdentityProvider;
 import io.gravitee.repository.management.model.IdentityProviderType;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
@@ -44,6 +41,9 @@ public class IdentityProviderRepositoryMock extends AbstractRepositoryMock<Ident
 
     @Override
     void prepare(IdentityProviderRepository identityProviderRepository) throws Exception {
+        final Map<String, String[]> groupMappings = new HashMap<>();
+        groupMappings.put("{#jsonPath('$.email_verified')}", new String[]{ "group1, group2" });
+
         final IdentityProvider newIdentityProvider = mock(IdentityProvider.class);
         when(newIdentityProvider.getName()).thenReturn("My idp 1");
         when(newIdentityProvider.getDescription()).thenReturn("Description for my idp 1");
@@ -53,6 +53,7 @@ public class IdentityProviderRepositoryMock extends AbstractRepositoryMock<Ident
         when(newIdentityProvider.getType()).thenReturn(IdentityProviderType.GITHUB);
         when(newIdentityProvider.getEmailRequired()).thenReturn(true);
         when(newIdentityProvider.getSyncMappings()).thenReturn(true);
+        when(newIdentityProvider.getGroupMappings()).thenReturn(groupMappings);
 
         final IdentityProvider identityProvider1 = new IdentityProvider();
         identityProvider1.setId("github");
@@ -62,6 +63,7 @@ public class IdentityProviderRepositoryMock extends AbstractRepositoryMock<Ident
         identityProvider1.setType(IdentityProviderType.OIDC);
         identityProvider1.setCreatedAt(new Date(1000000000000L));
         identityProvider1.setUpdatedAt(new Date(1486771200000L));
+        identityProvider1.setGroupMappings(groupMappings);
 
         final IdentityProvider identityProviderUpdated = mock(IdentityProvider.class);
         when(identityProviderUpdated.getName()).thenReturn("Google");
@@ -72,6 +74,7 @@ public class IdentityProviderRepositoryMock extends AbstractRepositoryMock<Ident
         when(identityProviderUpdated.isEnabled()).thenReturn(true);
         when(identityProviderUpdated.getEmailRequired()).thenReturn(true);
         when(identityProviderUpdated.getSyncMappings()).thenReturn(true);
+        when(identityProviderUpdated.getGroupMappings()).thenReturn(groupMappings);
 
         final IdentityProvider identityProvider3 = createMock();
 

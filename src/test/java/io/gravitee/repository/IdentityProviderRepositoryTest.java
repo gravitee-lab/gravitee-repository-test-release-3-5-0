@@ -22,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -45,6 +46,13 @@ public class IdentityProviderRepositoryTest extends AbstractRepositoryTest {
 
         assertNotNull(identityProviders);
         assertEquals(3, identityProviders.size());
+        for (IdentityProvider idp: identityProviders) {
+            final Map<String, String[]> groupMappings = idp.getGroupMappings();
+            assertNotNull(groupMappings);
+            for (Map.Entry<String, String[]> gm : groupMappings.entrySet()) {
+                assertNotNull(gm.getValue());
+            }
+        }
     }
 
     @Test
