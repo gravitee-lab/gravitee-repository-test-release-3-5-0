@@ -77,7 +77,6 @@ public class EnvironmentRepositoryMock extends AbstractRepositoryMock<Environmen
         final Set<Environment> allEnvironments = newSet(envCreate, env2Update, envUpdated, envDelete, envFindById);
         final Set<Environment> orgEnvironments = newSet(envFindById);
         
-        when(EnvironmentRepository.findAll()).thenReturn(allEnvironments);
         when(EnvironmentRepository.findByOrganization("DEFAULT-ORG")).thenReturn(orgEnvironments);
 
     }
